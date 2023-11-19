@@ -42,6 +42,7 @@ fetch("http://localhost:3000/games")
 
         headerTag.addEventListener("click", event => {
             displayGameDetails(game);
+            currentGame = game;
         })
         
     });
@@ -50,10 +51,15 @@ fetch("http://localhost:3000/games")
     const gameTitle = document.body.querySelector("#detail-title");
     const highScoreSpan = document.body.querySelector("#detail-high-score");
     
+    let currentGame;
+
     function displayGameDetails(gameItem) {
+
+        currentGame = gameItem;
+
         gameImage.src = gameItem.image;
         gameTitle.textContent = gameItem.name;
-        // highScoreSpan.textContent = gameItem.high_score;
+        highScoreSpan.textContent = gameItem.high_score;
     }
 
     displayGameDetails(games[0]);
@@ -64,7 +70,10 @@ fetch("http://localhost:3000/games")
         event.preventDefault();
 
         const scoreInput = document.body.querySelector("#score-input");
-        highScoreSpan.textContent = scoreInput.value;        
+
+        currentGame.high_score = scoreInput.value;
+
+        highScoreSpan.textContent = currentGame.high_score;
         scoreInput.value = "";
 
     });
